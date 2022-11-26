@@ -1,47 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "lab_5.h"
-#include "stdio.h"
 
-int multi_matrix(int x, int **matr1, int **matr2)
-{
-    int mulit_matrix[x][x];
-    for (int i=0; i < x; i++){
-        for (int j=0; j < x; j++){
-            mulit_matrix[i][j]=0;
-            for (int m=0; m < x; m++){
-                mulit_matrix[i][j]= mulit_matrix[i][j] + matr1[i][m] * matr2[m][j];
-            }
+int task1(){
+    int N1, N2;
+    printf("%s","Enter rows num: ");
+    scanf("%d", &N1);
+    printf("%s","Enter cols num: ");
+    scanf("%d", &N2);
+
+    printf("%s", "\n");
+
+
+    int m [N1][N2];
+    for(int i = 0; i < N2; i++){
+        printf("Enter %d'th num :", i+1);
+        scanf("%d", &m[0][i]);
+        m[1][i] = i + 1;
+    }
+    for(int i = 0; i < N1; i++){
+        for(int j = 0; j < N2; j++){
+            printf("%d", m[i][j]);
+        }
+        printf("%c",'\n');
+    }
+
+    return 0;
+}
+int print(const int *m, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        printf("%c",' ');
+        for(int j = 0; j < cols; j++){
+            printf("%d ",*(m + i*cols + j));
+        }
+        printf("%c", '\n');
+    }
+    return 0;
+}
+int init_matrix (int * m, int rows, int cols){
+    for(int y = 0; y < rows; y++){
+        for(int x = 0; x < cols; x++){
+            int t;
+            scanf("%d", &t);
+            *(m + y*cols + x) = t;
         }
     }
-    return ;
+    return 0;
 }
 
 
-void lab_5()
-{
-    const int N = 9;
-    int mass[N] = {12, 13, 14, 15, 16, 17, 18, 19, 20};
 
-    for(int i = 0; i < N-2; i+=3) {
-        printf("%i %i %i \n", mass[i], mass[i+1], mass[i+2]);
+int make_mult(int * m1, int * m2, int rows1, int cols1, int rows2, int cols2, int *res){
+    int z;
+    if(cols1 == cols2 && rows1 == rows2) {
+        z = cols1;
+    }else{
+        z = cols1 - 1;
     }
-    int x;
-    scanf("%d",&x);
-    int matr1[x][x], matr2[x][x];
-    for (int i=0; i < x; i++){
-        for (int j=0; j < x; j++){
-            scanf("%d", &matr1[i][j]);
+    for(int y = 0; y < rows1; y++) {
+        for (int k = 0; k < cols2; k++) {
+            int sum = 0;
+            for (int x = 0; x < cols1; x++) {
+                sum += (*m1 + y * cols1 + x) * (*m2 + x * cols2 + k);
+            }
+            *(res + y*(z) + k) = sum;
         }
     }
-    for (int i=0; i < x; i++){
-        for (int j=0; j < x; j++){
-            scanf("%d", &matr2[i][j]);
-        }
+    return 0;
+}
+
+int task2(){
+    int rows1, cols1;
+    printf("1 matr:\n");
+    scanf("%d", &rows1);
+    scanf("%d", &cols1);
+    int *m1 = calloc(rows1*cols1,sizeof(int));
+    printf("1 matr:\n");
+    init_matrix((int *) m1, rows1, cols1);
+    printf("%s", "\n");
+
+    printf("2 matr:\n");
+    int rows2, cols2;
+    scanf("%d", &rows2);
+    scanf("%d", &cols2);
+    int *m2 = calloc(rows2*cols2,sizeof(int));
+    printf("2 matrix:\n");
+    init_matrix((int *) m2, rows2, cols2);
+
+    if(cols1 == rows2){
+        int *res = calloc(rows1*cols2, sizeof(int));
+        make_mult((int *) m1, (int *) m2, rows1, cols1, rows2, cols2, res);
+        printf("\n");
+        print(res,rows1,cols2);
+    }else{
+        printf("Error");
+        return 0;
     }
 
-    for (int i=0; i < x; i++){
-        for (int j=0; j < x; j++){
-            printf("%d%c", multi_matrix(), ' ');
-        }
-        printf(" \n");
-    }
+
+
+    return 0;
+}
+
+void lab_5(){
+//    task1();
+    task2();
 }
