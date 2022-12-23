@@ -7,7 +7,7 @@ struct Circle {
     double pi;
 };
 
-float Square(struct Circle ci){
+float Square(struct Circle *ci){
     ci.r = pow(ci.r,2);
     return ci.pi * ci.r;
     }
