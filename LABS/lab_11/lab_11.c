@@ -7,7 +7,7 @@ void lab_11(){
 }
 
 void printStruct() {
-    struct Circle a;
+    struct Circle *a;
     printf("Радиус: %f\n" , a.radius);
     printf("Диаметр: %f\n" , a.diameter);
     printf("Длина дуги: %f\n" , a.circle_length);
@@ -16,7 +16,7 @@ void printStruct() {
 }
 
 void NewStruct() {
-    struct Circle al;
+    struct Circle *al;
     float pi , r;
     printf("Введите число pi: ");
     scanf("%f" ,  &pi);
@@ -30,10 +30,10 @@ void NewStruct() {
 
 }
 
-float circles(struct Circle al) {
+float circles(struct Circle *al) {
     return 2*al.pi*al.radius;
 }
 
-float square(struct Circle al) {
+float square(struct Circle *al) {
     return al.radius *al.radius *al.pi;
 }
