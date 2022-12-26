@@ -35,14 +35,11 @@ int strlength(const char *myStr){
 
 
 // simple number check
-bool isPrime(int n){
-    if (n > 1){
-        for (int i = 2; i < n; i++)
-            if (n % i == 0)
-                return false;
-        return true;
+bool isPrime(int n) {
+    int d = 2;
+    while (d * d <= n) {
+        if (n % d == 0) return 0;
+        d++;
     }
-    else
-        return false;
-
+    return 1;
 }
